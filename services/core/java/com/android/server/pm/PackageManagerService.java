@@ -2998,6 +2998,12 @@ public class PackageManagerService extends IPackageManager.Stub
                     com.android.internal.R.array.config_forceEnabledComponents)) {
                 ComponentName cn = ComponentName.unflattenFromString(name);
                 Slog.v(TAG, "Enabling " + name);
+
+            // Disable components marked for disabling at build-time
+            for (String name : mContext.getResources().getStringArray(
+                    com.android.internal.R.array.config_disabledComponents)) {
+                ComponentName cn = ComponentName.unflattenFromString(name);
+                Slog.v(TAG, "Disabling " + name);
                 String className = cn.getClassName();
                 PackageSetting pkgSetting = mSettings.mPackages.get(cn.getPackageName());
                 if (pkgSetting == null || pkgSetting.pkg == null
@@ -3006,6 +3012,10 @@ public class PackageManagerService extends IPackageManager.Stub
                     continue;
                 }
                 pkgSetting.enableComponentLPw(className, UserHandle.USER_OWNER);
+                    Slog.w(TAG, "Unable to disable " + name);
+                    continue;
+                }
+                pkgSetting.disableComponentLPw(className, UserHandle.USER_OWNER);
             }
 
             // If this is first boot after an OTA, and a normal boot, then
