@@ -40,7 +40,7 @@ import android.widget.TextView;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.settingslib.BatteryInfo;
 import com.android.settingslib.graph.UsageView;
-import com.android.systemui.BatteryMeterDrawable;
+import com.android.systemui.QS_BatteryMeterDrawable;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSIconView;
 import com.android.systemui.qs.QSTile;
